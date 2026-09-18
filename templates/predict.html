@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1>Performance Prediction</h1>
+        <p class="page-subtitle">
+            Assess academic indicators and generate a performance prediction.
+        </p>
+    </div>
+</div>
+
+<div class="card prediction-card">
+
+    <form method="post">
+
+        <div class="form-section">
+            <h2>Student Information</h2>
+
+            <label>Student</label>
+
+            <select name="student_id" required>
+                <option value="" disabled selected>
+                    Select a student
+                </option>
+
+                {% for s in students %}
+                <option value="{{ s.id }}">
+                    {{ s.matric_no }} - {{ s.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+
+        <div class="form-section">
+
+            <h2>Academic Indicators</h2>
+
+            <p class="section-description">
+                Enter the student's current academic indicators before examination.
+            </p>
+
+            <div class="prediction-grid">
+
+                {% for key,label,maxv in [
+                    ('attendance','Attendance',10),
+                    ('practical','Practical Skills',10),
+                    ('demeanor','Demeanor',10),
+                    ('presentation','Presentation Quality',10),
+                    ('participation','Class Participation',10),
+                    ('ca','Continuous Assessment',10)
+                ] %}
+
+                <div class="input-group">
+
+                    <label>{{ label }}</label>
+
+                    <div class="input-with-limit">
+                        <input
+                            type="number"
+                            name="{{ key }}"
+                            min="0"
+                            max="{{ maxv }}"
+                            step="0.1"
+                            placeholder="0 - {{ maxv }}"
+                            required
+                        >
+
+                        <span>/ {{ maxv }}</span>
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+        <div class="form-section examination-section">
+
+            <h2>Examination Score</h2>
+
+            <p class="section-description">
+                Enter the student's examination score.
+            </p>
+
+            <div class="input-group examination-input">
+
+                <label>Examination</label>
+
+                <div class="input-with-limit">
+                    <input
+                        type="number"
+                        name="examination"
+                        min="0"
+                        max="40"
+                        step="0.1"
+                        placeholder="0 - 40"
+                        required
+                    >
+
+                    <span>/ 40</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button type="submit" class="prediction-button">
+            ✦ Predict Performance
+        </button>
+
+    </form>
+
+</div>
+
+
+{% if result %}
+
+<div class="result prediction-result">
+
+    <div class="result-heading">
+        <div>
+            <h2>Prediction Result</h2>
+            <p>Assessment completed successfully.</p>
+        </div>
+    </div>
+
+    <div class="result-grid">
+
+        <div class="result-item">
+            <span>Performance Class</span>
+            <strong>
+                {{ result.class }} — {{ result.label }}
+            </strong>
+        </div>
+
+        <div class="result-item">
+            <span>Model Confidence</span>
+            <strong>
+                {{ "%.2f"|format(result.confidence) }}%
+            </strong>
+        </div>
+
+        <div class="result-item warning-item">
+            <span>Early Warning</span>
+            <strong>
+                {{ result.warning }}
+            </strong>
+        </div>
+
+    </div>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

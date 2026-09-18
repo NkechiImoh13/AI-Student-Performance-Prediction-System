@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+    <title>AI Academic Performance Management System</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+{% if session.get("logged_in") %}
+
+<!-- Top Header -->
+<header class="top-header">
+
+    <div class="system-brand">
+
+        <div class="brand-logo">
+            AP
+        </div>
+
+        <div>
+            <h2 class="brand-title">
+                AI Academic Performance
+            </h2>
+
+            <p class="brand-subtitle">
+                Management & Early Intervention System
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="admin-profile">
+
+        <div class="admin-info">
+            <small>SYSTEM ADMINISTRATOR</small>
+            <strong>Imoh Happiness Nkechinyere</strong>
+        </div>
+
+        <div class="admin-avatar">
+            IH
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- Navigation -->
+<nav>
+
+    <a href="{{ url_for('index') }}">⌂ Dashboard</a>
+
+    <a href="{{ url_for('students') }}">♟ Students</a>
+
+    <a href="{{ url_for('predict') }}">✦ Prediction</a>
+
+    <a href="{{ url_for('reports') }}">▣ Reports</a>
+
+    <a href="{{ url_for('logout') }}" class="logout-link">
+        Logout
+    </a>
+
+</nav>
+
+{% endif %}
+
+
+<!-- Page Content -->
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+
+</body>
+</html>

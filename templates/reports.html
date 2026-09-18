@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1>Performance Reports</h1>
+        <p>Review student performance predictions and early-warning results.</p>
+    </div>
+</div>
+
+{% if predictions %}
+
+<div class="card">
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Matric No.</th>
+                    <th>Student Name</th>
+                    <th>Department</th>
+                    <th>Performance</th>
+                    <th>Confidence</th>
+                    <th>Early Warning</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for p in predictions %}
+                <tr>
+                    <td><strong>{{ p.matric_no }}</strong></td>
+
+                    <td>{{ p.name }}</td>
+
+                    <td>{{ p.department }}</td>
+
+                    <td>
+                        {% if p.predicted_class == 1 %}
+                            <span class="badge danger">Class 1 — At Risk</span>
+                        {% elif p.predicted_class == 2 %}
+                            <span class="badge warning">Class 2 — Needs Improvement</span>
+                        {% elif p.predicted_class == 3 %}
+                            <span class="badge average">Class 3 — Average</span>
+                        {% elif p.predicted_class == 4 %}
+                            <span class="badge good">Class 4 — Good</span>
+                        {% elif p.predicted_class == 5 %}
+                            <span class="badge excellent">Class 5 — Excellent</span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ "%.2f"|format(p.confidence) }}%</td>
+
+                    <td>
+                        {% if p.early_warning == "High Risk" %}
+                            <span class="badge danger">High Risk</span>
+                        {% elif p.early_warning == "Attention Required" %}
+                            <span class="badge warning">Attention Required</span>
+                        {% else %}
+                            <span class="badge good">On Track</span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ p.created_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% else %}
+
+<div class="card empty-state">
+    <h2>No Reports Yet</h2>
+    <p>Prediction reports will appear here after you make a prediction.</p>
+
+    <a class="button" href="{{ url_for('predict') }}">
+        Make a Prediction
+    </a>
+</div>
+
+{% endif %}
+
+{% endblock %}

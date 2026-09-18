@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block content %}<div class="card"><h1>Register Student</h1>
+{% if error %}<div class="error">{{error}}</div>{% endif %}<form method="post">
+<label>Matriculation Number</label><input name="matric_no" required>
+<label>Full Name</label><input name="name" required>
+<label>Gender</label><select name="gender"><option>Female</option><option>Male</option></select>
+<label>Department</label><input name="department" placeholder="Computer Science">
+<label>Level</label><select name="level"><option>ND I</option><option>ND II</option><option>HND I</option><option>HND II</option></select>
+<button>Save Student</button></form></div>{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Dashboard</h1>
+
+<div class="cards">
+    <div class="stat">
+        <b>{{ total_students }}</b>
+        <span>Total Students</span>
+    </div>
+
+    <div class="stat">
+        <b>{{ total_predictions }}</b>
+        <span>Predictions Made</span>
+    </div>
+
+    <div class="stat">
+        <b>{{ at_risk }}</b>
+        <span>Students Requiring Attention</span>
+    </div>
+</div>
+
+<div class="quick-section">
+    <h2>Quick Actions</h2>
+
+    <div class="quick-actions">
+
+        <a class="quick-card" href="{{ url_for('add_student') }}">
+            <div class="quick-icon">+</div>
+            <div>
+                <strong>Add Student</strong>
+                <span>Register a new student in the system</span>
+            </div>
+        </a>
+
+        <a class="quick-card" href="{{ url_for('predict') }}">
+            <div class="quick-icon">✦</div>
+            <div>
+                <strong>Make Prediction</strong>
+                <span>Predict student academic performance</span>
+            </div>
+        </a>
+
+        <a class="quick-card" href="{{ url_for('reports') }}">
+            <div class="quick-icon">▣</div>
+            <div>
+                <strong>View Reports</strong>
+                <span>Review previous predictions and results</span>
+            </div>
+        </a>
+
+    </div>
+</div>
+
+<div class="card overview">
+    <h2>System Overview</h2>
+
+    <p>
+        The system stores student academic information, predicts performance
+        using a trained machine-learning model, and provides an early-warning
+        indication based on pre-examination academic indicators.
+    </p>
+
+    <a class="button" href="{{ url_for('predict') }}">
+        Make Prediction
+    </a>
+</div>
+
+{% endblock %}

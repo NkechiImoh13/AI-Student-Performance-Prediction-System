@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1>Students</h1>
+        <p class="page-subtitle">Manage student records and academic information.</p>
+    </div>
+
+    <a class="button" href="{{ url_for('add_student') }}">
+        + Add Student
+    </a>
+</div>
+
+<div class="card student-table-card">
+
+    {% if students %}
+
+    <div class="table-wrapper">
+        <table class="student-table">
+            <thead>
+                <tr>
+                    <th>Matric No.</th>
+                    <th>Student Name</th>
+                    <th>Department</th>
+                    <th>Level</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for s in students %}
+                <tr>
+                    <td>
+                        <strong>{{ s.matric_no }}</strong>
+                    </td>
+
+                    <td>{{ s.name }}</td>
+
+                    <td>{{ s.department }}</td>
+
+                    <td>
+                        <span class="level-badge">
+                            {{ s.level }}
+                        </span>
+                    </td>
+
+                    <td>
+                        <form method="POST"
+                              action="{{ url_for('delete_student', student_id=s.id) }}"
+                              onsubmit="return confirm('Are you sure you want to delete this student?');">
+
+                            <button type="submit" class="delete-button">
+                                Delete
+                            </button>
+
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+    {% else %}
+
+    <div class="empty-state">
+        <div class="empty-icon">♙</div>
+        <h2>No Students Yet</h2>
+        <p>Add a student to begin managing academic records.</p>
+
+        <a class="button" href="{{ url_for('add_student') }}">
+            + Add First Student
+        </a>
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

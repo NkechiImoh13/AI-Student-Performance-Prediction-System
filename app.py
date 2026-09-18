@@ -10,8 +10,7 @@ app.secret_key = "student-performance-project-key"
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 DB = os.path.join(BASE, "student_performance.db")
-MODEL = joblib.load(os.path.join(BASE, "models", "student_performance_random_forest.pkl"))
-
+MODEL = joblib.load(os.path.join(BASE, "models", "student_performance_random_forest_small.pkl"))
 FEATURES = ["attendance","practical","demeanor","presentation","participation","ca","examination"]
 
 def db():

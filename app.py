@@ -69,14 +69,21 @@ def index():
     return render_template("dashboard.html", total_students=total_students,
                            total_predictions=total_predictions, at_risk=at_risk)
 
-@app.route("/login", methods=["GET","POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        if request.form.get("username") == "admin" and request.form.get("password") == "admin123":
+        print("ADMIN_USERNAME loaded:", bool(os.environ.get("ADMIN_USERNAME")))
+        print("ADMIN_PASSWORD loaded:", bool(os.environ.get("ADMIN_PASSWORD")))
+
+        if (request.form.get("username") == os.environ.get("ADMIN_USERNAME")
+                and request.form.get("password") == os.environ.get("ADMIN_PASSWORD")):
             session["logged_in"] = True
             return redirect(url_for("index"))
+
         return render_template("login.html", error="Invalid username or password.")
+
     return render_template("login.html")
+
 
 @app.route("/logout")
 def logout():

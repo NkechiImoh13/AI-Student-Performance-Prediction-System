@@ -72,8 +72,7 @@ def index():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        print("ADMIN_USERNAME loaded:", bool(os.environ.get("ADMIN_USERNAME")))
-        print("ADMIN_PASSWORD loaded:", bool(os.environ.get("ADMIN_PASSWORD")))
+
 
         if (request.form.get("username") == os.environ.get("ADMIN_USERNAME")
                 and request.form.get("password") == os.environ.get("ADMIN_PASSWORD")):
